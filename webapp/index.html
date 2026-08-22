@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Lock In</title>
+<style>
+  html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
+</style>
+</head>
+<body>
 <!-- Lock In: Pinterest-board edition — streak calendar + checklist + to-do -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +42,13 @@
     font-family:'Inter',sans-serif;
     padding:22px 20px 34px;
     border-radius:12px;
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
     min-height:100%;
+  }
+  @media (max-width:480px){
+    .pb-root{ padding:16px 12px 26px; border-radius:0; }
   }
 
   .pb-header{
@@ -64,12 +87,14 @@
   .pb-save-btn:hover{ background:var(--coral-dim); }
 
   /* ===== masonry board ===== */
+  /* column-width (rather than a fixed column-count breakpoint) lets the
+     browser decide columns from actual available space — reliably 1 full-width
+     column on phones, without depending on a guessed viewport breakpoint. */
   .pb-board{
-    column-count:3;
+    column-width:300px;
     column-gap:16px;
+    width:100%;
   }
-  @media (max-width:900px){ .pb-board{ column-count:2; } }
-  @media (max-width:600px){ .pb-board{ column-count:1; } }
 
   .pb-pin{
     break-inside:avoid;
@@ -194,7 +219,7 @@
     font-weight:700;
   }
   .pb-check.checked{ background:var(--coral); border-color:var(--coral); }
-  .pb-item-text{ flex:1; font-size:13px; }
+  .pb-item-text{ flex:1; font-size:13px; min-width:0; overflow-wrap:break-word; word-break:break-word; }
   .pb-dot{
     width:8px;height:8px;
     border-radius:50%;
@@ -259,6 +284,8 @@
     font-size:15px;
     line-height:1.4;
     margin:0;
+    overflow-wrap:break-word;
+    word-break:break-word;
   }
   .pb-loading{
     text-align:center;
@@ -330,9 +357,26 @@
 
   const root = document.getElementById('pb-root');
 
+  // Uses the browser's own localStorage — works on any real website,
+  // unlike window.storage which only exists inside Claude's artifact preview.
+  const storage = {
+    get(key){
+      try{
+        const v = localStorage.getItem(key);
+        return v ? { value: v } : null;
+      }catch(e){ return null; }
+    },
+    set(key, value){
+      try{
+        localStorage.setItem(key, value);
+        return { value };
+      }catch(e){ return null; }
+    }
+  };
+
   async function load(){
     try{
-      const res = await window.storage.get(STORAGE_KEY, false);
+      const res = storage.get(STORAGE_KEY);
       if(res && res.value){
         const parsed = JSON.parse(res.value);
         state.daily = parsed.daily || [];
@@ -345,7 +389,7 @@
 
   async function save(){
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify({daily: state.daily, dailyLog: state.dailyLog, todos: state.todos}), false);
+      storage.set(STORAGE_KEY, JSON.stringify({daily: state.daily, dailyLog: state.dailyLog, todos: state.todos}));
     }catch(e){ console.error('storage save failed', e); }
   }
 
@@ -552,3 +596,6 @@
   load();
 })();
 </script>
+
+</body>
+</html>
