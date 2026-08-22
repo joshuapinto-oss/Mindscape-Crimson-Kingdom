@@ -1,0 +1,554 @@
+<!-- Lock In: Pinterest-board edition — streak calendar + checklist + to-do -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#FCFAF8;
+    --ink:#2B2A28;
+    --ink-dim:#83807A;
+    --coral:#F0334D;
+    --coral-dim:#C71F37;
+    --line:rgba(43,42,40,0.08);
+    --pink:#FDE2E4;
+    --peach:#FFE8D6;
+    --yellow:#FFF3C4;
+    --mint:#D9F5E3;
+    --sky:#D6ECFF;
+    --lavender:#EAE0FF;
+  }
+  *{box-sizing:border-box;}
+  .pb-root{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    padding:22px 20px 34px;
+    border-radius:12px;
+    min-height:100%;
+  }
+
+  .pb-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .pb-title{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .pb-sub{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin:2px 0 0;
+  }
+  .pb-save-btn{
+    background:var(--coral);
+    color:#fff;
+    border:none;
+    border-radius:24px;
+    padding:9px 18px;
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:12.5px;
+    cursor:pointer;
+  }
+  .pb-save-btn:hover{ background:var(--coral-dim); }
+
+  /* ===== masonry board ===== */
+  .pb-board{
+    column-count:3;
+    column-gap:16px;
+  }
+  @media (max-width:900px){ .pb-board{ column-count:2; } }
+  @media (max-width:600px){ .pb-board{ column-count:1; } }
+
+  .pb-pin{
+    break-inside:avoid;
+    margin-bottom:16px;
+    border-radius:20px;
+    padding:18px;
+    box-shadow:0 2px 10px rgba(43,42,40,0.07);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .pb-pin:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 22px rgba(43,42,40,0.13);
+  }
+  .pb-pin.streak{ background:var(--lavender); }
+  .pb-pin.checklist{ background:var(--mint); }
+  .pb-pin.todo{ background:var(--sky); }
+  .pb-pin.quote{ background:var(--peach); }
+
+  .pb-pin-label{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 12px;
+  }
+
+  /* streak pin */
+  .pb-streak-count{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .pb-streak-num{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    font-size:42px;
+    line-height:1;
+  }
+  .pb-streak-label{
+    font-size:13px;
+    color:var(--ink-dim);
+    font-weight:500;
+  }
+  .pb-cal-nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .pb-nav-btn{
+    background:rgba(255,255,255,0.6);
+    border:none;
+    color:var(--ink);
+    border-radius:50%;
+    width:26px;height:26px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .pb-nav-btn:hover{ background:#fff; }
+  .pb-cal-month{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:13px;
+  }
+  .pb-weekdays{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+    margin-bottom:4px;
+  }
+  .pb-weekday{
+    font-size:9.5px;
+    text-align:center;
+    color:var(--ink-dim);
+    font-weight:600;
+  }
+  .pb-cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+  }
+  .pb-day{
+    aspect-ratio:1;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10.5px;
+    color:var(--ink);
+    background:rgba(255,255,255,0.5);
+    position:relative;
+  }
+  .pb-day.empty{ visibility:hidden; }
+  .pb-day.today{ box-shadow:inset 0 0 0 1.5px var(--coral); font-weight:700; }
+  .pb-day.hit{ background:var(--coral); color:#fff; font-weight:700; }
+  .pb-day.hit.today{ box-shadow:inset 0 0 0 1.5px #fff; }
+
+  /* checklist + todo */
+  .pb-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 10px;
+    background:rgba(255,255,255,0.55);
+    border-radius:11px;
+    margin-bottom:6px;
+  }
+  .pb-item.done .pb-item-text{ color:var(--ink-dim); text-decoration:line-through; }
+  .pb-check{
+    width:18px;height:18px;
+    border-radius:50%;
+    border:1.8px solid rgba(43,42,40,0.3);
+    background:transparent;
+    cursor:pointer;
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;
+    color:#fff;
+    font-weight:700;
+  }
+  .pb-check.checked{ background:var(--coral); border-color:var(--coral); }
+  .pb-item-text{ flex:1; font-size:13px; }
+  .pb-dot{
+    width:8px;height:8px;
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .pb-dot.high{ background:var(--coral); }
+  .pb-dot.med{ background:#E8B84B; }
+  .pb-dot.low{ background:#8FB6A8; }
+  .pb-remove{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:14px;
+    color:var(--ink-dim);
+    padding:2px 4px;
+    flex-shrink:0;
+  }
+  .pb-remove:hover{ color:var(--coral); }
+
+  .pb-add-row{ display:flex; gap:6px; margin-top:4px; }
+  .pb-input{
+    flex:1;
+    background:rgba(255,255,255,0.75);
+    border:none;
+    color:var(--ink);
+    border-radius:10px;
+    padding:9px 11px;
+    font-size:12.5px;
+    font-family:'Inter',sans-serif;
+  }
+  .pb-input::placeholder{ color:var(--ink-dim); }
+  .pb-input:focus{ outline:2px solid rgba(43,42,40,0.15); }
+  .pb-select{
+    background:rgba(255,255,255,0.75);
+    border:none;
+    color:var(--ink);
+    border-radius:10px;
+    padding:9px 8px;
+    font-size:11px;
+    font-family:'Inter',sans-serif;
+  }
+  .pb-add-btn{
+    background:var(--ink);
+    border:none;
+    color:#fff;
+    font-weight:700;
+    border-radius:10px;
+    padding:0 14px;
+    cursor:pointer;
+    font-size:16px;
+  }
+  .pb-add-btn:hover{ background:#000; }
+
+  .pb-empty{
+    color:var(--ink-dim);
+    font-size:12px;
+    padding:8px 0 4px;
+  }
+  .pb-quote-text{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    line-height:1.4;
+    margin:0;
+  }
+  .pb-loading{
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:12.5px;
+    padding:30px 0;
+  }
+</style>
+
+<div class="pb-root" id="pb-root">
+  <div class="pb-loading" id="pb-loading">pinning your board…</div>
+</div>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'lockin-pinterest-v1';
+  const WEEKDAYS = ['M','T','W','T','F','S','S'];
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const QUOTES = [
+    'Small daily wins build the streak.',
+    'Consistency beats intensity.',
+    'Show up today, the streak remembers.',
+    'One checked box at a time.',
+    'Discipline is choosing today over someday.',
+    'Motivation gets you started, habit keeps you going.',
+    'You do not have to be extreme, just consistent.',
+    'The streak is just proof you kept your word to yourself.',
+    'Progress is a series of ordinary days.',
+    'Do it even when you do not feel like it.',
+    'A little every day beats a lot some day.',
+    'Future you is built by today you.',
+    'Nobody is coming to lock in for you.',
+    'Bad days still count if you show up.',
+    'Systems beat willpower.',
+    'Your only competition is yesterday.',
+    'Done is better than perfect.',
+    'Start before you feel ready.',
+    'Discomfort now, discipline forever.',
+    'The board only grows if you keep showing up.',
+    'Momentum is built one tick at a time.',
+    'What gets checked off gets done.',
+    'Consistency is the real glow up.',
+    'Skip the excuse, not the habit.',
+    'Every locked-in day is a vote for who you are becoming.',
+    'Small steps still move the needle.',
+    'Focus on the process, the streak follows.',
+    'You are one checklist away from momentum.',
+    'Keep the chain unbroken.',
+    'Today is a good day to lock in.'
+  ];
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function dateKey(y,m,d){ return `${y}-${pad(m+1)}-${pad(d)}`; }
+  function uid(){ return Math.random().toString(36).slice(2,9); }
+
+  const today = new Date();
+  const todayKey = dateKey(today.getFullYear(), today.getMonth(), today.getDate());
+  const startOfYear = new Date(today.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((today - startOfYear) / 86400000);
+  const quote = QUOTES[dayOfYear % QUOTES.length];
+
+  let state = {
+    calYear: today.getFullYear(),
+    calMonth: today.getMonth(),
+    daily: [],              // recurring checklist items: {id, text}
+    dailyLog: {},           // { 'YYYY-MM-DD': { completedIds: [...] } }
+    todos: []               // {id, text, priority, done}
+  };
+
+  const root = document.getElementById('pb-root');
+
+  async function load(){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, false);
+      if(res && res.value){
+        const parsed = JSON.parse(res.value);
+        state.daily = parsed.daily || [];
+        state.dailyLog = parsed.dailyLog || {};
+        state.todos = parsed.todos || [];
+      }
+    }catch(e){ /* fresh start */ }
+    render();
+  }
+
+  async function save(){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify({daily: state.daily, dailyLog: state.dailyLog, todos: state.todos}), false);
+    }catch(e){ console.error('storage save failed', e); }
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function todaysCompleted(){
+    return (state.dailyLog[todayKey] && state.dailyLog[todayKey].completedIds) || [];
+  }
+
+  function isDateHit(key){
+    const log = state.dailyLog[key];
+    if(!log || state.daily.length === 0) return false;
+    return log.completedIds.length >= state.daily.length &&
+      state.daily.every(item => log.completedIds.includes(item.id));
+  }
+
+  function buildCalendarCells(year, month){
+    const firstDay = new Date(year, month, 1);
+    const startOffset = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const cells = [];
+    for(let i=0;i<startOffset;i++) cells.push(null);
+    for(let d=1; d<=daysInMonth; d++) cells.push(d);
+    while(cells.length % 7 !== 0) cells.push(null);
+    return cells;
+  }
+
+  function countHitsInMonth(year, month){
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let count = 0;
+    for(let d=1; d<=daysInMonth; d++){
+      if(isDateHit(dateKey(year, month, d))) count++;
+    }
+    return count;
+  }
+
+  function render(){
+    const cells = buildCalendarCells(state.calYear, state.calMonth);
+    const hitsThisMonth = countHitsInMonth(state.calYear, state.calMonth);
+    const completedToday = todaysCompleted();
+
+    root.innerHTML = `
+      <div class="pb-header">
+        <div>
+          <h1 class="pb-title">📌 Lock In</h1>
+          <p class="pb-sub">your board for staying consistent</p>
+        </div>
+        <button class="pb-save-btn">Locked In</button>
+      </div>
+
+      <div class="pb-board">
+
+        <div class="pb-pin streak">
+          <p class="pb-pin-label">Streak</p>
+          <div class="pb-streak-count">
+            <div class="pb-streak-num">${hitsThisMonth}</div>
+            <div class="pb-streak-label">days locked in<br>this month</div>
+          </div>
+          <div class="pb-cal-nav">
+            <button class="pb-nav-btn" id="pb-prev">‹</button>
+            <div class="pb-cal-month">${MONTH_NAMES[state.calMonth]} ${state.calYear}</div>
+            <button class="pb-nav-btn" id="pb-next">›</button>
+          </div>
+          <div class="pb-weekdays">
+            ${WEEKDAYS.map(w => `<div class="pb-weekday">${w}</div>`).join('')}
+          </div>
+          <div class="pb-cal-grid">
+            ${cells.map(d => {
+              if(d === null) return `<div class="pb-day empty"></div>`;
+              const key = dateKey(state.calYear, state.calMonth, d);
+              const isToday = key === todayKey;
+              const hit = isDateHit(key);
+              return `<div class="pb-day ${isToday ? 'today' : ''} ${hit ? 'hit' : ''}">${d}</div>`;
+            }).join('')}
+          </div>
+        </div>
+
+        <div class="pb-pin checklist">
+          <p class="pb-pin-label">Today's Checklist</p>
+          ${state.daily.length === 0 ? '<div class="pb-empty">add the things you want to do every day</div>' : ''}
+          ${state.daily.map(item => {
+            const done = completedToday.includes(item.id);
+            return `
+              <div class="pb-item ${done ? 'done' : ''}">
+                <button class="pb-check ${done ? 'checked' : ''}" data-daily-toggle="${item.id}">${done ? '✓' : ''}</button>
+                <div class="pb-item-text">${escapeHtml(item.text)}</div>
+                <button class="pb-remove" data-daily-remove="${item.id}">✕</button>
+              </div>
+            `;
+          }).join('')}
+          <div class="pb-add-row">
+            <input class="pb-input" id="pb-daily-input" placeholder="Add a daily habit…" maxlength="80" />
+            <button class="pb-add-btn" id="pb-daily-add">+</button>
+          </div>
+        </div>
+
+        <div class="pb-pin todo">
+          <p class="pb-pin-label">To-Do</p>
+          ${state.todos.length === 0 ? '<div class="pb-empty">nothing here yet</div>' : ''}
+          ${state.todos.map(t => `
+            <div class="pb-item ${t.done ? 'done' : ''}">
+              <button class="pb-check ${t.done ? 'checked' : ''}" data-todo-toggle="${t.id}">${t.done ? '✓' : ''}</button>
+              <div class="pb-item-text">${escapeHtml(t.text)}</div>
+              <button class="pb-remove" data-todo-remove="${t.id}">✕</button>
+            </div>
+          `).join('')}
+          <div class="pb-add-row">
+            <input class="pb-input" id="pb-todo-input" placeholder="Add a task…" maxlength="140" />
+            <button class="pb-add-btn" id="pb-todo-add">+</button>
+          </div>
+        </div>
+
+        <div class="pb-pin quote">
+          <p class="pb-pin-label">Reminder</p>
+          <p class="pb-quote-text">${quote}</p>
+        </div>
+
+      </div>
+    `;
+
+    bindEvents();
+  }
+
+  function bindEvents(){
+    const prev = document.getElementById('pb-prev');
+    const next = document.getElementById('pb-next');
+    if(prev) prev.addEventListener('click', () => {
+      state.calMonth--;
+      if(state.calMonth < 0){ state.calMonth = 11; state.calYear--; }
+      render();
+    });
+    if(next) next.addEventListener('click', () => {
+      state.calMonth++;
+      if(state.calMonth > 11){ state.calMonth = 0; state.calYear++; }
+      render();
+    });
+
+    root.querySelectorAll('[data-daily-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-daily-toggle');
+        if(!state.dailyLog[todayKey]) state.dailyLog[todayKey] = { completedIds: [] };
+        const list = state.dailyLog[todayKey].completedIds;
+        const idx = list.indexOf(id);
+        if(idx === -1) list.push(id); else list.splice(idx, 1);
+        save(); render();
+      });
+    });
+    root.querySelectorAll('[data-daily-remove]').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-daily-remove');
+        state.daily = state.daily.filter(item => item.id !== id);
+        save(); render();
+      });
+    });
+
+    const dailyAdd = document.getElementById('pb-daily-add');
+    if(dailyAdd) dailyAdd.addEventListener('click', addDaily);
+    const dailyInput = document.getElementById('pb-daily-input');
+    if(dailyInput) dailyInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') addDaily(); });
+
+    root.querySelectorAll('[data-todo-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-todo-toggle');
+        const t = state.todos.find(x => x.id === id);
+        if(t){ t.done = !t.done; save(); render(); }
+      });
+    });
+    root.querySelectorAll('[data-todo-remove]').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-todo-remove');
+        state.todos = state.todos.filter(x => x.id !== id);
+        save(); render();
+      });
+    });
+
+    const todoAdd = document.getElementById('pb-todo-add');
+    if(todoAdd) todoAdd.addEventListener('click', addTodo);
+    const todoInput = document.getElementById('pb-todo-input');
+    if(todoInput) todoInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') addTodo(); });
+  }
+
+  function addDaily(){
+    const input = document.getElementById('pb-daily-input');
+    const text = input.value.trim();
+    if(!text) return;
+    state.daily.push({ id: uid(), text });
+    save(); render();
+    const newInput = document.getElementById('pb-daily-input');
+    if(newInput) newInput.focus();
+  }
+
+  function addTodo(){
+    const input = document.getElementById('pb-todo-input');
+    const text = input.value.trim();
+    if(!text) return;
+    state.todos.push({ id: uid(), text, done: false });
+    save(); render();
+    const newInput = document.getElementById('pb-todo-input');
+    if(newInput) newInput.focus();
+  }
+
+  load();
+})();
+</script>
