@@ -1534,3 +1534,393 @@ body{background:#4b0718}
   stroke-dasharray: none !important;
   opacity: .34 !important;
 }
+
+
+/* ==========================================================
+   MINDSCAPE FINAL MAP + MOBILE CONSISTENCY PASS
+   One map design across desktop and phones; no loud pin glow.
+========================================================== */
+
+/* Same illustrated terrain and route at every breakpoint */
+.world-map-shell {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding: 9px !important;
+  border: 4px solid #d7a866 !important;
+  border-radius: 19px !important;
+  background: linear-gradient(145deg, #5b1025, #310817) !important;
+  box-shadow: 0 12px 28px #21061033 !important;
+}
+
+.world-map {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 1000 / 560 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #d7b77e !important;
+  border-radius: 12px !important;
+  background: radial-gradient(ellipse at 52% 18%, #a43a4b 0%, #7b1c32 48%, #4a0a1b 100%) !important;
+  isolation: isolate !important;
+}
+
+.world-map:before {
+  display: block !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    radial-gradient(ellipse at 25% 18%, #e2b87922, transparent 25%),
+    radial-gradient(ellipse at 80% 70%, #edb56a1a, transparent 26%),
+    repeating-linear-gradient(165deg, transparent 0 100px, #f4c77b08 102px 104px) !important;
+}
+
+.world-map:after {
+  display: none !important;
+}
+
+.world-map .map-terrain {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2 !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.world-map .map-forest {
+  display: block !important;
+  z-index: 3 !important;
+  font-size: clamp(15px, 3.3vw, 36px) !important;
+  line-height: 1.2 !important;
+  letter-spacing: clamp(2px, .7vw, 8px) !important;
+  opacity: .78 !important;
+  text-shadow: 0 2px 0 #a5b58c !important;
+}
+
+.world-map .map-landmark {
+  display: flex !important;
+  z-index: 4 !important;
+  filter: none !important;
+  gap: 4px !important;
+}
+
+.world-map .map-landmark span {
+  font-size: clamp(18px, 4.2vw, 48px) !important;
+  filter: none !important;
+}
+
+.world-map .map-landmark small {
+  display: block !important;
+  padding: clamp(3px, .55vw, 7px) clamp(5px, .9vw, 12px) !important;
+  border: 1px solid #e8d5a4 !important;
+  border-radius: 999px !important;
+  background: #351a2dcc !important;
+  color: #f5e6bf !important;
+  font-size: clamp(5px, .75vw, 9px) !important;
+  letter-spacing: .12em !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+/* Remove the oversized highlighted topic cards.
+   Numbered markers are quiet, consistent map pins instead. */
+.world-map .map-pin {
+  position: absolute !important;
+  z-index: 5 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: clamp(25px, 3.5vw, 42px) !important;
+  min-width: clamp(25px, 3.5vw, 42px) !important;
+  max-width: clamp(25px, 3.5vw, 42px) !important;
+  height: clamp(25px, 3.5vw, 42px) !important;
+  min-height: clamp(25px, 3.5vw, 42px) !important;
+  padding: 0 !important;
+  border: 1.5px solid #e5c58e !important;
+  border-radius: 50% !important;
+  background: #f4e8ca !important;
+  color: #4b1425 !important;
+  box-shadow: 0 2px 5px #1e0b1740 !important;
+  transform: translate(-50%, -50%) !important;
+  transition: background-color .16s ease !important;
+  outline: none !important;
+}
+
+.world-map .map-pin:before {
+  display: none !important;
+  content: none !important;
+}
+
+.world-map .map-pin .pin-number {
+  position: static !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: #4b1425 !important;
+  font: 700 clamp(8px, .95vw, 11px) 'DM Mono', monospace !important;
+  text-align: center !important;
+}
+
+.world-map .map-pin .pin-name,
+.world-map .map-pin .pin-status {
+  display: none !important;
+}
+
+.world-map .map-pin:hover,
+.world-map .map-pin:active,
+.world-map .map-pin:focus,
+.world-map .map-pin:focus-visible {
+  transform: translate(-50%, -50%) !important;
+  background: #f4e8ca !important;
+  box-shadow: 0 2px 5px #1e0b1740 !important;
+  outline: none !important;
+}
+
+.world-map .map-pin:focus-visible {
+  outline: 2px solid #fff0d1 !important;
+  outline-offset: 2px !important;
+}
+
+.world-map .map-compass {
+  z-index: 6 !important;
+  right: 2.5% !important;
+  top: 4% !important;
+  width: clamp(30px, 4.6vw, 56px) !important;
+  height: clamp(30px, 4.6vw, 56px) !important;
+  padding-top: clamp(3px, .6vw, 7px) !important;
+  font-size: clamp(7px, .85vw, 10px) !important;
+  box-shadow: none !important;
+}
+
+.world-map .map-compass span {
+  font-size: clamp(10px, 1.5vw, 19px) !important;
+}
+
+.world-map .map-path-label {
+  z-index: 6 !important;
+  left: 50% !important;
+  bottom: 4% !important;
+  transform: translateX(-50%) !important;
+  padding: clamp(4px, .7vw, 9px) clamp(7px, 1.1vw, 14px) !important;
+  border: 1px solid #e2c48c !important;
+  border-radius: 999px !important;
+  background: #3e1b2bbd !important;
+  color: #fff0ce !important;
+  font-size: clamp(6px, .8vw, 10px) !important;
+  letter-spacing: .14em !important;
+  white-space: nowrap !important;
+}
+
+.world-map-shell .map-legend {
+  display: flex !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 8px 14px !important;
+  padding: 12px 5px 3px !important;
+  color: #f5dfca !important;
+  font: clamp(7px, .8vw, 10px) 'DM Mono', monospace !important;
+  line-height: 1.6 !important;
+}
+
+.world-map-shell .legend-dot {
+  box-shadow: none !important;
+}
+
+/* On phones the entire desktop map is scaled proportionally:
+   same SVG terrain, road, landmarks, pin coordinates and compass.
+   No separate vertical list or cropped 760px map. */
+@media (max-width: 650px) {
+  .journey-section.world-map-section {
+    padding: 48px 5% 52px !important;
+  }
+
+  .world-map-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 6px !important;
+    border-width: 3px !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+  }
+
+  .world-map {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1000 / 560 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .world-map .map-terrain {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .world-map .map-forest {
+    font-size: clamp(11px, 4vw, 18px) !important;
+    letter-spacing: clamp(1px, .7vw, 4px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .world-map .map-landmark {
+    gap: 2px !important;
+  }
+
+  .world-map .map-landmark span {
+    font-size: clamp(15px, 5vw, 25px) !important;
+  }
+
+  .world-map .map-landmark small {
+    padding: 3px 5px !important;
+    font-size: clamp(4px, 1.35vw, 6px) !important;
+    letter-spacing: .07em !important;
+  }
+
+  .world-map .map-pin {
+    width: clamp(22px, 7vw, 30px) !important;
+    min-width: clamp(22px, 7vw, 30px) !important;
+    max-width: clamp(22px, 7vw, 30px) !important;
+    height: clamp(22px, 7vw, 30px) !important;
+    min-height: clamp(22px, 7vw, 30px) !important;
+    padding: 0 !important;
+    border-width: 1px !important;
+    box-shadow: 0 1px 3px #1e0b1740 !important;
+  }
+
+  .world-map .map-pin .pin-number {
+    font-size: clamp(7px, 2.1vw, 9px) !important;
+  }
+
+  .world-map .map-compass {
+    width: clamp(25px, 8vw, 34px) !important;
+    height: clamp(25px, 8vw, 34px) !important;
+    padding-top: 3px !important;
+    font-size: 6px !important;
+  }
+
+  .world-map .map-compass span {
+    font-size: 10px !important;
+  }
+
+  .world-map .map-path-label {
+    bottom: 3% !important;
+    padding: 3px 6px !important;
+    font-size: clamp(5px, 1.5vw, 7px) !important;
+    letter-spacing: .08em !important;
+  }
+
+  .world-map-shell .map-legend {
+    justify-content: flex-start !important;
+    gap: 6px 10px !important;
+    padding: 9px 3px 2px !important;
+    font-size: 7px !important;
+  }
+
+  /* Keep the assessment callout visible on mobile */
+  .lesson-sidebar {
+    display: block !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin-bottom: 25px !important;
+    padding: 17px !important;
+    border: 1px solid #d7a05e66 !important;
+    border-radius: 16px !important;
+    background: linear-gradient(155deg, #5b0b20, #350714) !important;
+  }
+
+  .lesson-sidebar .eyebrow {
+    display: block !important;
+    color: #e8c17e !important;
+  }
+
+  .lesson-sidebar h3 {
+    margin: 9px 0 14px !important;
+    font-size: 26px !important;
+    color: #fff4e7 !important;
+  }
+
+  .lesson-sidebar > button {
+    display: none !important;
+  }
+
+  .lesson-sidebar > button.active {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    grid-template-columns: 38px minmax(0, 1fr) 16px !important;
+    padding: 8px !important;
+    border: 1px solid #e8c17e33 !important;
+    border-radius: 10px !important;
+    background: #ffffff08 !important;
+    color: #fff0df !important;
+  }
+
+  .lesson-sidebar .sidebar-exam {
+    display: flex !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 14px 0 0 !important;
+    padding: 16px !important;
+    gap: 9px !important;
+    border: 1px solid #d7a05e88 !important;
+    border-radius: 13px !important;
+    background: #173342 !important;
+    color: #fff3e8 !important;
+  }
+
+  .lesson-sidebar .sidebar-exam svg {
+    color: #f2c879 !important;
+  }
+
+  .lesson-sidebar .sidebar-exam b {
+    display: block !important;
+    color: #fff3e8 !important;
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+  }
+
+  .lesson-sidebar .sidebar-exam span {
+    display: block !important;
+    color: #e0e8e9 !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  .lesson-sidebar .sidebar-exam button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 46px !important;
+    margin-top: 3px !important;
+    padding: 10px 14px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: #edc57f !important;
+    color: #421323 !important;
+    -webkit-text-fill-color: #421323 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+  }
+}
