@@ -112,6 +112,8 @@ body{background:#f1ead8}
 .exam-promo{background:#17332f}
 .footer{background:#142b2b}
 @media(max-width:850px){.hero-illustration{opacity:.28;width:100%;right:-12%;top:140px}.kingdom-intro{max-width:100%}.kingdom-hero{min-height:720px}.world-map{height:510px}.world-invitation{display:block}.world-invitation p{margin-top:18px}}
+@media(max-width:600px){.kingdom-hero{padding:50px 6% 0;min-height:690px}.kingdom-hero h1{font-size:58px}.hero-illustration{top:290px;height:360px;opacity:.48}.castle{transform:scale(.7);transform-origin:bottom center;left:35%;bottom:125px}.hill-back{height:190px}.hill-front{height:140px}.kingdom-hero .hero-bottom{font-size:7px;gap:12px}.journey-section.world-map-section{padding:65px 5%}.world-map-shell{padding:8px;border-width:5px}.world-map{height:500px}.map-pin{min-width:74px;padding:5px 6px}.pin-name{font-size:8px;max-width:90px}.pin-status{font-size:6px}.pin-number{width:18px;height:18px;font-size:8px}.map-landmark span{font-size:27px}.map-landmark small{font-size:6px}.map-legend{font-size:7px}.map-compass{right:10px;top:10px;width:34px;height:34px;font-size:8px}.world-invitation h3{font-size:27px}}
+
 
 /* STORY QUESTION — READABILITY FIX */
 .story-scene {
@@ -1323,221 +1325,212 @@ body{background:#4b0718}
   .topic-tabs button{flex:0 0 auto!important;white-space:nowrap!important}
 }
 
-/* FIX: Make the sidebar assessment button text readable */
-.lesson-sidebar .sidebar-exam > button {
-  background: linear-gradient(135deg, #f2cf91, #e8b96e) !important;
-  color: #421323 !important;
-  -webkit-text-fill-color: #421323 !important;
-  opacity: 1 !important;
-  font-weight: 800 !important;
+/* MAP REFINEMENT — keep the map calm; no decorative glow or hover spotlight */
+.world-map-shell {
+  box-shadow: 0 18px 42px #260b1826, inset 0 0 0 1px #f2d39b44 !important;
+}
+.map-pin {
+  box-shadow: 0 4px 10px #210b1733 !important;
+  transition: transform .18s ease, background-color .18s ease !important;
+}
+.map-pin:hover {
+  box-shadow: 0 5px 12px #210b1733 !important;
+  outline: none !important;
+}
+.map-pin:focus-visible {
+  outline: 2px solid #f5dfb5 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 5px 12px #210b1733 !important;
+}
+.map-pin:before { box-shadow: none !important; }
+.map-landmark, .map-landmark span, .map-landmark small {
+  filter: none !important;
   text-shadow: none !important;
-  border: 1px solid #d9a95f !important;
+  box-shadow: none !important;
 }
 
-.lesson-sidebar .sidebar-exam > button svg {
-  color: #421323 !important;
-  opacity: 1 !important;
-}
-
-/* FIX: Make the sidebar assessment button text readable */
-.lesson-sidebar .sidebar-exam > button {
-  background: linear-gradient(135deg, #f2cf91, #e8b96e) !important;
-  color: #421323 !important;
-  -webkit-text-fill-color: #421323 !important;
-  opacity: 1 !important;
-  font-weight: 800 !important;
-  text-shadow: none !important;
-  border: 1px solid #d9a95f !important;
-}
-
-.lesson-sidebar .sidebar-exam > button svg {
-  color: #421323 !important;
-  opacity: 1 !important;
-}
-
-/* ==========================================
-   MINDSCAPE — REFINED MOBILE WORLD MAP
-   Same illustrated route and chapter positions
-========================================== */
-
+/* Keep the actual illustrated map and route on mobile. The portrait layout
+   uses the same SVG, chapter coordinates and landmarks, scaled to screen width. */
 @media (max-width: 600px) {
-
+  .journey-section.world-map-section { padding: 54px 4.5% 58px !important; }
   .world-map-shell {
+    display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 7px !important;
     overflow: hidden !important;
-    border: 3px solid #c99b5c !important;
-    border-radius: 18px !important;
-    background: linear-gradient(145deg, #541326, #290b19) !important;
-    box-shadow:
-      0 12px 30px #23071355,
-      inset 0 0 0 1px #f5d69a55 !important;
+    border: 4px solid #d7a866 !important;
+    border-radius: 17px !important;
+    box-shadow: 0 12px 28px #2509142b !important;
   }
-
   .world-map {
+    display: block !important;
     position: relative !important;
     width: 100% !important;
     min-width: 0 !important;
-    height: auto !important;
-    aspect-ratio: 1.35 / 1 !important;
+    height: clamp(430px, 125vw, 540px) !important;
     min-height: 0 !important;
+    padding: 0 !important;
     overflow: hidden !important;
-    border: 1px solid #d9b77b !important;
-    border-radius: 12px !important;
+    border-radius: 11px !important;
+    background-image: linear-gradient(180deg, #24101b22, #24101b38), url('/art/crimson-castle.png') !important;
     background-size: cover !important;
-    background-position: center !important;
+    background-position: center 56% !important;
   }
-
-  /* Keep the original terrain and winding road visible */
+  .world-map:before { display: none !important; }
+  .world-map:after {
+    display: block !important;
+    background: linear-gradient(145deg, #25101a22, #25101a35) !important;
+    z-index: 1 !important;
+  }
   .map-terrain {
     display: block !important;
-    opacity: .88 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: .94 !important;
     z-index: 2 !important;
+    filter: none !important;
   }
-
-  .world-map:after {
-    background: linear-gradient(
-      145deg,
-      #27121b22,
-      #35101d35
-    ) !important;
-    z-index: 3 !important;
-  }
-
+  .map-terrain path { filter: none !important; }
   .map-forest {
     display: block !important;
-    font-size: clamp(15px, 4vw, 23px) !important;
-    opacity: .72 !important;
-    z-index: 4 !important;
+    z-index: 3 !important;
+    font-size: clamp(17px, 5vw, 23px) !important;
+    letter-spacing: 3px !important;
+    line-height: 1.55 !important;
+    opacity: .68 !important;
+    text-shadow: none !important;
   }
-
   .map-landmark {
     display: flex !important;
-    z-index: 5 !important;
+    z-index: 4 !important;
     gap: 3px !important;
   }
-
-  .map-landmark span {
-    font-size: clamp(23px, 6vw, 34px) !important;
-  }
-
+  .map-landmark span { font-size: clamp(21px, 6vw, 29px) !important; line-height: 1 !important; }
   .map-landmark small {
+    display: block !important;
+    max-width: 105px !important;
+    padding: 4px 6px !important;
+    border: 1px solid #d8b77d !important;
+    border-radius: 999px !important;
+    background: #3b1726e8 !important;
+    color: #f7e6c8 !important;
     font-size: 6px !important;
     letter-spacing: .08em !important;
-    padding: 4px 6px !important;
     white-space: nowrap !important;
-    background: #351321ed !important;
-    border: 1px solid #dfbd7b !important;
-    color: #ffe8bd !important;
-    border-radius: 20px !important;
   }
+  .landmark-castle { left: 43% !important; top: 18% !important; }
+  .landmark-library { left: 5% !important; top: 39% !important; }
+  .landmark-lab { right: 4% !important; top: 15% !important; }
+  .landmark-garden { right: 15% !important; bottom: 10% !important; }
 
-  /* Elegant, consistent chapter markers */
+  /* Quiet numbered markers: no oversized cards or glow rings */
   .map-pin {
     position: absolute !important;
-    z-index: 7 !important;
-    width: 42px !important;
-    min-width: 42px !important;
-    max-width: 42px !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    padding: 0 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    transform: translate(-50%, -50%) !important;
-    border: 2px solid #f0d49b !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    border: 1.5px solid #e5c58e !important;
     border-radius: 50% !important;
-    background: linear-gradient(145deg, #fff2d4, #e5bd7c) !important;
-    color: #4a1426 !important;
-    box-shadow:
-      0 3px 9px #1c071399,
-      inset 0 1px 2px #ffffff !important;
-    transition: transform .2s ease, box-shadow .2s ease !important;
+    background: #f7e8c9 !important;
+    color: #4b1425 !important;
+    box-shadow: 0 2px 6px #1e0b1740 !important;
+    transform: translate(-50%, -50%) !important;
+    text-align: center !important;
+    z-index: 6 !important;
   }
-
-  .map-pin:before {
-    display: none !important;
-  }
-
+  .map-pin:before { display: none !important; }
   .pin-number {
     position: static !important;
-    transform: none !important;
+    display: block !important;
     width: auto !important;
     height: auto !important;
+    transform: none !important;
     background: transparent !important;
-    color: #4a1426 !important;
-    font: 800 12px 'DM Mono', monospace !important;
+    color: #4b1425 !important;
+    font: 700 10px 'DM Mono', monospace !important;
   }
-
-  .pin-name,
-  .pin-status {
-    display: none !important;
+  .pin-name, .pin-status { display: none !important; }
+  .map-pin:hover, .map-pin:active {
+    transform: translate(-50%, -50%) !important;
+    background: #fff5e1 !important;
+    box-shadow: 0 2px 6px #1e0b1740 !important;
   }
-
-  .map-pin:hover,
-  .map-pin:focus-visible {
-    transform: translate(-50%, -50%) scale(1.12) !important;
-    background: #fff8e9 !important;
-    box-shadow:
-      0 5px 12px #1c071399,
-      0 0 0 3px #f1d39a66 !important;
-    outline: none !important;
-  }
-
+  .map-pin:focus-visible { outline: 2px solid #fff0d1 !important; outline-offset: 2px !important; }
   .map-compass {
-    width: 38px !important;
-    height: 38px !important;
+    display: block !important;
+    z-index: 8 !important;
     right: 9px !important;
     top: 9px !important;
-    font-size: 9px !important;
-    z-index: 8 !important;
+    width: 37px !important;
+    height: 37px !important;
+    padding-top: 5px !important;
+    font-size: 8px !important;
+    box-shadow: none !important;
   }
-
-  .map-compass span {
-    font-size: 12px !important;
-  }
-
+  .map-compass span { font-size: 12px !important; }
   .map-path-label {
     display: block !important;
+    z-index: 8 !important;
     left: 50% !important;
     bottom: 8px !important;
     transform: translateX(-50%) !important;
-    max-width: 85% !important;
-    white-space: nowrap !important;
+    max-width: 82% !important;
+    padding: 6px 9px !important;
+    border: 1px solid #d9bd8b !important;
+    border-radius: 999px !important;
+    background: #3b1726d9 !important;
+    color: #f7e6c8 !important;
     font-size: 7px !important;
     letter-spacing: .12em !important;
-    padding: 6px 9px !important;
-    z-index: 8 !important;
+    white-space: nowrap !important;
   }
-
   .map-legend {
     display: flex !important;
+    justify-content: flex-start !important;
     flex-wrap: wrap !important;
-    gap: 9px 15px !important;
-    padding: 13px 5px 5px !important;
-    font-size: 9px !important;
+    gap: 8px 14px !important;
+    padding: 12px 5px 3px !important;
+    color: #f5e3c7 !important;
+    font: 8px 'DM Mono', monospace !important;
     line-height: 1.6 !important;
   }
+  .legend-dot { width: 8px !important; height: 8px !important; box-shadow: none !important; }
 }
 
-/* Cleaner marker feedback on desktop too */
-.map-pin {
-  box-shadow:
-    0 4px 12px #24081466,
-    inset 0 1px 0 #ffffff !important;
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    background .2s ease !important;
+/* Restore the intended SVG road strokes (older nth-child rules hit terrain shapes). */
+.map-terrain > path:nth-of-type(4) {
+  stroke: #2a2923 !important;
+  stroke-width: 52 !important;
+  stroke-linecap: round !important;
+  stroke-dasharray: none !important;
+  opacity: .24 !important;
 }
-
-.map-pin:hover,
-.map-pin:focus-visible {
-  background: #fff8e9 !important;
-  box-shadow:
-    0 8px 18px #24081466,
-    0 0 0 3px #e5bd7c55 !important;
-  outline: none !important;
+.map-terrain > path:nth-of-type(5) {
+  stroke: #d7b77d !important;
+  stroke-width: 34 !important;
+  stroke-linecap: round !important;
+  stroke-dasharray: none !important;
+  opacity: 1 !important;
+}
+.map-terrain > path:nth-of-type(6) {
+  stroke: #fff0c8 !important;
+  stroke-width: 2.5 !important;
+  stroke-linecap: round !important;
+  stroke-dasharray: 5 15 !important;
+  opacity: .95 !important;
+}
+.map-terrain > path:nth-of-type(7) {
+  stroke: #b8d4c1 !important;
+  stroke-width: 18 !important;
+  stroke-dasharray: none !important;
+  opacity: .34 !important;
 }

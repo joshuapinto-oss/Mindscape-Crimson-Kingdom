@@ -1,5 +1,6 @@
 import {useEffect,useMemo,useState} from 'react';
 import {additionalChapters} from './extraChapters';
+import {researchMethodsChapter} from './researchChapter';
 import {motion,AnimatePresence} from 'framer-motion';
 import {Brain,BookOpen,Compass,FlaskConical,Users,Layers,GraduationCap,ChevronRight,ChevronLeft,Check,Lock,Menu,X,RotateCcw,ArrowUpRight,Lightbulb,Target,Activity,Clock3,BookmarkCheck, Sparkles, Award, RefreshCw} from 'lucide-react';
 
@@ -52,7 +53,7 @@ const chapters:Chapter[]=[
 
 ];
 
-chapters.push(...additionalChapters);
+chapters.push(...additionalChapters, researchMethodsChapter);
 
 const finalQuestions=[
 {chapter:'Foundations',difficulty:'Easy',q:'Psychology scientifically studies:',opts:['Only mental illness','Behaviour and mental processes','Only the nervous system','Only social groups'],a:1,why:'The definition includes behaviour and mental processes, shaped by biological, psychological and social influences.'},
@@ -104,6 +105,24 @@ finalQuestions.push(
 {chapter:'Cognitive',difficulty:'Moderate',q:'Which schedule typically produces the highest steady response rate and greatest resistance to extinction?',opts:['Fixed interval','Variable interval','Fixed ratio','Variable ratio'],a:3,why:'Variable-ratio reinforcement is associated with high, steady responding and strong resistance to extinction.'}
 );
 
+
+finalQuestions.push(
+{chapter:'Research Methods',difficulty:'Easy',q:'Which way of knowing relies on systematic, self-correcting observation?',opts:['Tenacity','Authority','A priori intuition','Science'],a:3,why:'Peirce’s account identifies science as systematic observation that can correct its own errors.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'A researcher states that the experimental group will score higher than the control group. This is a:',opts:['Non-directional hypothesis','Directional hypothesis','Null hypothesis','Sampling frame'],a:1,why:'A directional hypothesis predicts the direction of the effect.'},
+{chapter:'Research Methods',difficulty:'Difficult',q:'A variable that changes the strength of the relationship between stress and depression is a:',opts:['Mediator','Moderator','Confound by definition','Dependent variable'],a:1,why:'A moderator changes when or how strongly an effect occurs; a mediator explains how it occurs.'},
+{chapter:'Research Methods',difficulty:'Easy',q:'Which level of measurement has equal intervals and a true zero?',opts:['Nominal','Ordinal','Interval','Ratio'],a:3,why:'Ratio measurement has equal intervals and a meaningful zero, as with reaction time and weight.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'A researcher recruits participants by asking each participant to refer other people from a hard-to-reach group. This is:',opts:['Stratified sampling','Snowball sampling','Systematic sampling','Cluster sampling'],a:1,why:'Snowball or chain-referral sampling uses participants to recruit further participants.'},
+{chapter:'Research Methods',difficulty:'Difficult',q:'Which Belmont principle concerns fair distribution of research burdens and benefits?',opts:['Beneficence','Justice','Respect for persons','Fidelity'],a:1,why:'Justice concerns fair sharing of burdens and benefits.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'A study measures a behaviour at baseline, introduces treatment, withdraws it and then reintroduces it. Which design is this?',opts:['A–B','A–B–A','A–B–A–B','Multiple cohort'],a:2,why:'A–B–A–B repeats treatment and withdrawal, allowing the effect to be replicated.'},
+{chapter:'Research Methods',difficulty:'Easy',q:'Which measure of spread is the square root of variance?',opts:['Range','Quartile deviation','Standard deviation','Coefficient of variation'],a:2,why:'Standard deviation is the square root of variance and returns spread to the original units.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'A 95% confidence interval for a mean difference excludes zero. According to the PDF, this indicates:',opts:['The difference is significant at .05','The null is certainly true','The effect is necessarily large','There is no sampling error'],a:0,why:'The source notes that a 95% CI for a difference that excludes 0 is significant at .05.'},
+{chapter:'Research Methods',difficulty:'Difficult',q:'If r = −.70, the coefficient of determination is:',opts:['−.49','.07','.49','.70'],a:2,why:'r² = (−.70)² = .49, or 49% of shared/explained variance.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'The same participants complete anxiety measures before and after therapy. Which test is appropriate?',opts:['Independent t-test','Paired t-test','One-way between-subjects ANOVA','Mann–Whitney U by default'],a:1,why:'The observations are related because the same people are measured twice.'},
+{chapter:'Research Methods',difficulty:'Difficult',q:'A researcher has nominal frequency data in a contingency table and wants to test independence. Which test is used?',opts:['Pearson chi-square','Pearson r','Paired t-test','Repeated-measures ANOVA'],a:0,why:'Pearson chi-square tests independence between categorical variables in a contingency table.'},
+{chapter:'Research Methods',difficulty:'Moderate',q:'Which factor-analytic rotation assumes that factors are uncorrelated?',opts:['Oblimin','Promax','Varimax','Oblique rotation'],a:2,why:'Varimax is an orthogonal rotation; oblimin and promax are oblique.'},
+{chapter:'Research Methods',difficulty:'Difficult',q:'Which epidemiological measure counts new cases occurring during a period?',opts:['Prevalence','Incidence','Specificity','Sensitivity'],a:1,why:'Incidence counts new cases over a period; prevalence counts all existing cases at a point or period.'}
+);
+
 const icons=[Brain,Compass,FlaskConical,Users,Layers,GraduationCap,Clock3,Users,Lightbulb];
 
 const storyScenes:Record<string,{scene:string;question:string;choices:string[];reveal:string;bridge:string}>={
@@ -122,6 +141,7 @@ const storyScenes:Record<string,{scene:string;question:string;choices:string[];r
 storyScenes.emergence={scene:'You enter an ancient archive. One scroll explains behaviour through myth; another asks for natural causes, observation and reason.',question:'Which path marks the shift toward philosophical inquiry?',choices:['Accept fate as the only explanation','Use reason to test natural explanations','Avoid asking questions about the mind'],reveal:'The movement from mythos toward logos represents a turn to reasoned explanation and the search for natural causes.',bridge:'You are ready to compare Greek thought, philosophical debates and the rise of scientific psychology.'};
 storyScenes.biological={scene:'A messenger neuron receives a signal, reaches threshold and sends a pulse toward another cell. The whole body responds.',question:'What must happen at the axon hillock for an action potential to begin?',choices:['The neuron reaches threshold','The myelin sheath releases hormones','The dendrites become terminal buttons'],reveal:'When depolarisation reaches threshold, an all-or-none action potential begins and travels along the axon.',bridge:'Follow the signal into synapses, brain structures, endocrine systems and sensory pathways.'};
 storyScenes.cognitive={scene:'In a crowded royal hall, a bell rings, a friend calls your name and a familiar face appears across the room.',question:'What helps determine which information reaches awareness?',choices:['Attention and perceptual organisation','Only the loudest stimulus every time','Memory without any sensory input'],reveal:'Attention is selective, while perception combines sensory input with organisation, expectation and context.',bridge:'Explore thresholds, attention, perception, learning and memory in the mind’s workshop.'};
+storyScenes['research-methods']={scene:'A royal researcher claims that a new study technique improves memory. Before accepting the claim, the kingdom asks for a careful test, fair sampling and transparent evidence.',question:'What is the best first step?',choices:['Publish the claim immediately','Define a testable question and plan how to measure it','Choose whichever result looks most impressive'],reveal:'Research begins with a clear, testable problem and a method that fits the question. Sampling, ethics and analysis then determine how much confidence the evidence deserves.',bridge:'Enter the Research Wing to learn how psychologists turn questions into evidence.'};
 
 const readProgress=()=>{try{const v=JSON.parse(localStorage.getItem('mindscape-progress')||'{"done":[],"attempts":[]}');return {done:Array.isArray(v.done)?v.done.filter((x:any)=>typeof x==='string'):[],attempts:Array.isArray(v.attempts)?v.attempts:[]}}catch{return {done:[],attempts:[]}}};
 const shuffledQuestions=()=>finalQuestions.map(q=>{const order=q.opts.map((_,i)=>i).sort(()=>Math.random()-.5);return {...q,opts:order.map(i=>q.opts[i]),a:order.indexOf(q.a)}}).sort(()=>Math.random()-.5);
@@ -185,7 +205,7 @@ export default function App(){
    <div className="map-landmark landmark-library"><span>📚</span><small>THE ARCHIVES</small></div>
    <div className="map-landmark landmark-lab"><span>🔬</span><small>THE OBSERVATORY</small></div>
    <div className="map-landmark landmark-garden"><span>🌿</span><small>THE GARDENS</small></div>
-   {chapters.map((c,i)=>{const positions=[['8%','80%'],['25%','65%'],['44%','76%'],['61%','60%'],['79%','70%'],['89%','49%'],['70%','37%'],['52%','46%'],['34%','34%'],['17%','24%'],['43%','16%'],['64%','15%']];const done=c.topics.filter((_,j)=>progress.done.includes(c.id+'-'+j)).length;return <button key={c.id} className={`map-pin pin-${i+1}`} style={{left:positions[i][0],top:positions[i][1],'--pin':c.accent} as React.CSSProperties} onClick={()=>{selectChapter(c.id);document.getElementById('lesson')?.scrollIntoView({behavior:'smooth'})}}><span className="pin-number">{String(i+1).padStart(2,'0')}</span><span className="pin-name">{c.title}</span><span className="pin-status">{done===c.topics.length?'✦ DISCOVERED':'EXPLORE'}</span></button>})}
+   {chapters.map((c,i)=>{const positions=[['8%','80%'],['25%','65%'],['44%','76%'],['61%','60%'],['79%','70%'],['89%','49%'],['70%','37%'],['52%','46%'],['34%','34%'],['17%','24%'],['43%','16%'],['64%','15%'],['84%','23%']];const done=c.topics.filter((_,j)=>progress.done.includes(c.id+'-'+j)).length;return <button key={c.id} className={`map-pin pin-${i+1}`} style={{left:positions[i][0],top:positions[i][1],'--pin':c.accent} as React.CSSProperties} onClick={()=>{selectChapter(c.id);document.getElementById('lesson')?.scrollIntoView({behavior:'smooth'})}}><span className="pin-number">{String(i+1).padStart(2,'0')}</span><span className="pin-name">{c.title}</span><span className="pin-status">{done===c.topics.length?'✦ DISCOVERED':'EXPLORE'}</span></button>})}
    <div className="map-path-label">THE PATH OF CURIOSITY</div>
   </div>
   <div className="map-legend"><span><i className="legend-dot"/> Unexplored region</span><span><i className="legend-dot discovered"/> Knowledge collected</span><span>↗ Select any numbered landmark</span></div>

@@ -1,14 +1,15 @@
 # Mindscape — Crimson Kingdom of Psychology
 
-An extension of the existing Mindscape React application. The original nine chapters and their story-world experience remain in place; three additional PDF-derived chapters are integrated separately.
+An extension of the existing Mindscape React application. The original nine chapters and their story-world experience remain in place; four additional PDF-derived chapters are integrated separately.
 
 ## Added chapters
 
 1. **The Emergence of Psychology** — Greek and philosophical roots, mind–body positions, physiological and evolutionary roots, schools and forces, paradigms, Indian concepts of self and the development of psychology in India.
 2. **The Biological Basis of Behaviour** — neurons and action potentials, synapses and neurotransmitters, nervous-system divisions, brain structures, cortical localisation, language, brain research methods, memory and plasticity, endocrine functions, sensory systems and behaviour genetics. The supplied PDF page headed “Sleep, Hunger, Thirst and Sex” contains no readable explanatory text, so the chapter does not invent detailed claims for that page.
 3. **Cognitive Psychology** — psychophysics, signal detection, pain, attention, perception, learning, conditioning, memory, intelligence, concepts, problem-solving, reasoning, decision-making, language, creativity, metacognition and machine minds.
+4. **Research Methods & Statistics** — research aims and hypotheses, variables and measurement, sampling, ethics, experimental and other research designs, quantitative/qualitative/mixed methods, descriptive and inferential statistics, normal distributions, correlation, regression, t-tests, ANOVA, non-parametric tests, factor analysis, SEM and epidemiology. This chapter is based on *Research Methods & Statistics, Unit 6* (PsychoDidi, 17 pages).
 
-The additions create a total of **12 chapters**, **41 learning topics**, and a **44-question final assessment**. All new chapters use the existing chapter data model, interactive story scene, topic tabs, revealable knowledge checks, completion tracking, map pins, chapter index and assessment flow.
+The additions create a total of **13 chapters**, **50 learning topics**, and a **58-question final assessment**. All new chapters use the existing chapter data model, interactive story scene, topic tabs, revealable knowledge checks, completion tracking, map pins, chapter index and assessment flow.
 
 ## Technology
 
@@ -51,7 +52,7 @@ This project is intended to update the existing GitHub repository already connec
 
    ```bash
    git add -A
-   git commit -m "Add three Mindscape psychology chapters"
+   git commit -m "Integrate research methods and statistics chapter"
    git push origin main
    ```
 
@@ -66,4 +67,4 @@ Chapter-topic completion and assessment attempts are stored in browser LocalStor
 
 ## Source integration notes
 
-The three supplied PDFs were transformed into separate chapter content rather than displayed as raw PDF text. Key names, definitions, models, examples, dates and classifications have been retained in the learning explanations and checks. Where the source page provides only a heading without readable details, the site avoids adding unsupported source-specific claims.
+The supplied PDFs were transformed into separate chapter content rather than displayed as raw PDF text. Key names, definitions, models, examples, dates and classifications have been retained in the learning explanations and checks. Where the source page provides only a heading without readable details, the site avoids adding unsupported source-specific claims.
