@@ -1189,3 +1189,138 @@ body{background:#4b0718}
  .map-pin{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:66px!important;padding:9px 12px 9px 56px!important;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:3px!important;border-radius:13px!important;z-index:4!important;text-align:left!important}.map-pin:before{left:10px!important;width:34px!important;height:34px!important}.pin-number{left:19px!important;font-size:12px!important}.pin-name{font-size:12px!important;max-width:none!important}.pin-status{font-size:8px!important}.map-pin:hover,.map-pin:focus-visible{transform:translateX(3px)!important}.map-legend{font-size:9px!important;gap:10px!important;line-height:1.6!important}
  .lesson-section{padding:48px 5%!important}.lesson-sidebar{padding:18px 13px!important}.lesson-sidebar h3{font-size:28px!important}.lesson-sidebar>button{width:100%!important;float:none!important;min-height:60px!important;margin:0 0 7px!important;grid-template-columns:42px minmax(0,1fr) 16px!important;font-size:12px!important}.lesson-sidebar>button span{width:38px!important;height:38px!important}.lesson-sidebar .sidebar-exam{padding:16px!important}.lesson-sidebar .sidebar-exam button{width:100%!important}.topic-block{grid-template-columns:40px minmax(0,1fr)!important;gap:12px!important;padding:19px 0!important}.block-index{width:38px!important;height:38px!important;min-width:38px!important;border-radius:11px!important;font-size:11px!important}.topic-block h4{font-size:14px!important}.topic-block p{font-size:13px!important;line-height:1.75!important}.topic-content{padding:22px 16px!important}.topic-content .topic-intro{font-size:14px!important}.lesson-title-row{gap:12px!important}.lesson-title-row h2{font-size:28px!important}
 }
+
+/* FINAL POLISH: remove nested browser scrollbars and restore readable scene panel */
+.lesson-sidebar{
+  max-height:none!important;
+  overflow:visible!important;
+  scrollbar-width:none;
+}
+.lesson-sidebar::-webkit-scrollbar{display:none}
+.topic-tabs{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:stretch!important;
+  gap:8px!important;
+  overflow-x:visible!important;
+  overflow-y:hidden!important;
+  scrollbar-width:none!important;
+  padding-bottom:2px;
+}
+.topic-tabs::-webkit-scrollbar{display:none!important}
+.topic-tabs button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:46px!important;
+  max-width:100%;
+  white-space:normal!important;
+  line-height:1.35!important;
+  border:1px solid #d8bd91!important;
+  border-radius:999px!important;
+  padding:10px 15px!important;
+  background:#fff8eb!important;
+  color:#725b50!important;
+}
+.topic-tabs button.active{
+  background:#5b1023!important;
+  border-color:#d7aa69!important;
+  color:#fff0d4!important;
+}
+.topic-tabs button span{color:#b18452!important;flex:none}
+.topic-tabs button.active span{color:#f0c982!important}
+.story-scene{
+  position:relative!important;
+  isolation:isolate;
+  background:linear-gradient(135deg,#fff9ec 0%,#f0e3ca 100%)!important;
+  border:1px solid #d7b77e!important;
+  border-radius:18px!important;
+  padding:28px clamp(18px,3vw,38px)!important;
+  color:#321c25!important;
+  box-shadow:0 14px 34px #27071320!important;
+  opacity:1!important;
+  filter:none!important;
+}
+.story-scene:after{color:#6b203014!important;z-index:-1}
+.story-scene .scene-top{color:#916b3d!important;font-size:10px!important;line-height:1.5}
+.story-scene .scene-pulse{background:#b88748!important;box-shadow:0 0 0 5px #b8874822!important}
+.story-scene .scene-copy{
+  color:#321c25!important;
+  font:500 clamp(17px,1.35vw,21px)/1.7 'Playfair Display',serif!important;
+  max-width:850px!important;
+  margin:20px 0 22px!important;
+  opacity:1!important;
+}
+.story-scene h4{color:#735235!important;font-size:13px!important;line-height:1.55!important;margin:0 0 13px!important}
+.scene-choices{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+.scene-choices button{
+  display:flex!important;align-items:flex-start!important;gap:10px!important;
+  min-width:0!important;min-height:70px!important;padding:14px!important;
+  border:1px solid #d8c6a7!important;border-radius:12px!important;
+  background:#fffdf8!important;color:#443039!important;
+  font-size:13px!important;line-height:1.55!important;text-align:left!important;
+  opacity:1!important;white-space:normal!important;
+}
+.scene-choices button span{
+  flex:0 0 26px!important;width:26px!important;height:26px!important;
+  display:grid!important;place-items:center!important;border-radius:50%!important;
+  background:#f0d9a8!important;color:#5a2c2c!important;font:700 11px 'DM Mono'!important;
+}
+.scene-choices button:hover,.scene-choices button.picked{
+  background:#f7ecd5!important;border-color:#b98a4e!important;color:#321c25!important;
+}
+.scene-reveal{background:#e9efdf!important;border-left:3px solid #82966d!important;border-radius:0 10px 10px 0!important}
+.scene-reveal b{color:#735235!important}.scene-reveal p{color:#354b3d!important}.scene-reveal small{color:#536b58!important}
+
+/* The map keeps the exact same illustrated route and pin coordinates on phones.
+   The map becomes horizontally pannable instead of being rearranged into a list. */
+@media(max-width:600px){
+  .world-map-shell{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+    scrollbar-color:#bd925b #eadcc1;
+  }
+  .world-map{
+    display:block!important;
+    position:relative!important;
+    width:760px!important;
+    min-width:760px!important;
+    height:500px!important;
+    min-height:500px!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background-size:cover!important;
+    background-position:center 58%!important;
+  }
+  .world-map:before{display:none!important}
+  .world-map:after{display:block!important}
+  .map-terrain,.map-forest,.map-landmark,.map-compass,.map-path-label{display:initial!important}
+  .map-pin{
+    position:absolute!important;
+    width:auto!important;
+    min-width:150px!important;
+    max-width:185px!important;
+    min-height:68px!important;
+    padding:9px 10px 9px 48px!important;
+    display:grid!important;
+    transform:translate(-50%,-50%)!important;
+    border-radius:13px!important;
+  }
+  .map-pin:before{left:8px!important;width:30px!important;height:30px!important}
+  .pin-number{left:16px!important;font-size:11px!important}
+  .pin-name{font-size:10px!important;max-width:130px!important}
+  .pin-status{font-size:7px!important}
+  .map-pin:hover,.map-pin:focus-visible{transform:translate(-50%,-50%) scale(1.03)!important}
+  .map-legend{font-size:9px!important;gap:10px!important;line-height:1.6!important}
+  .scene-choices{grid-template-columns:1fr!important}
+  .scene-choices button{min-height:56px!important;font-size:12px!important}
+  .story-scene{padding:21px 17px!important}
+  .topic-tabs{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;justify-content:flex-start!important;scrollbar-width:none!important}
+  .topic-tabs button{flex:0 0 auto!important;white-space:nowrap!important}
+}
