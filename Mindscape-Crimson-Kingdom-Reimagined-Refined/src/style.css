@@ -1324,3 +1324,19 @@ body{background:#4b0718}
   .topic-tabs{flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;justify-content:flex-start!important;scrollbar-width:none!important}
   .topic-tabs button{flex:0 0 auto!important;white-space:nowrap!important}
 }
+
+/* FIX: Make the sidebar assessment button text readable */
+.lesson-sidebar .sidebar-exam > button {
+  background: linear-gradient(135deg, #f2cf91, #e8b96e) !important;
+  color: #421323 !important;
+  -webkit-text-fill-color: #421323 !important;
+  opacity: 1 !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
+  border: 1px solid #d9a95f !important;
+}
+
+.lesson-sidebar .sidebar-exam > button svg {
+  color: #421323 !important;
+  opacity: 1 !important;
+}
