@@ -2047,23 +2047,32 @@ body{background:#4b0718}
     z-index: 10 !important;
   }
 
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin:before {
+    content: none !important;
+    display: none !important;
+  }
+
   .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-number {
     display: grid !important;
     visibility: visible !important;
     opacity: 1 !important;
-    position: absolute !important;
-    left: 10px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 32px !important;
-    height: 32px !important;
+    position: relative !important;
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    place-items: center !important;
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
     margin: 0 !important;
     padding: 0 !important;
-    place-items: center !important;
-    text-align: center !important;
-    line-height: 1 !important;
-    box-sizing: border-box !important;
+    transform: none !important;
+    border: 1px solid #f4d69a !important;
+    border-radius: 11px !important;
+    background: linear-gradient(145deg, #8c2940, #4f1226) !important;
     color: #ffe8b7 !important;
+    font: 700 11px/1 'DM Mono', monospace !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
     z-index: 2 !important;
   }
 
