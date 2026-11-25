@@ -1978,3 +1978,117 @@ body{background:#4b0718}
 @media (min-width: 601px) {
   .map-pan { width:100%; overflow:visible; }
 }
+
+
+/* SINGLE SOURCE OF TRUTH: mobile map viewport and desktop-sized canvas */
+@media (max-width: 600px) {
+  .journey-section.world-map-section,
+  .journey-section.world-map-section .world-map-shell {
+    overflow: visible !important;
+  }
+
+  .journey-section.world-map-section .world-map-shell {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 7px !important;
+  }
+
+  .journey-section.world-map-section .map-pan {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-x: contain !important;
+    padding: 0 0 10px !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map {
+    display: block !important;
+    position: relative !important;
+    width: 1200px !important;
+    min-width: 1200px !important;
+    max-width: none !important;
+    height: 660px !important;
+    min-height: 660px !important;
+    max-height: 660px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    isolation: isolate !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    width: 205px !important;
+    min-width: 205px !important;
+    max-width: 205px !important;
+    min-height: 76px !important;
+    height: auto !important;
+    padding: 10px 12px !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    justify-items: start !important;
+    gap: 3px 10px !important;
+    transform: translate(-50%, -50%) !important;
+    border: 2px solid #e8c98d !important;
+    border-radius: 16px !important;
+    background: linear-gradient(145deg, #fff4dc, #ead5ac) !important;
+    color: #3a2028 !important;
+    text-align: left !important;
+    z-index: 10 !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-number {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    left: 18px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: #ffe8b7 !important;
+    z-index: 2 !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-name,
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-status {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    grid-column: 2 !important;
+    position: relative !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    color: #3a2028 !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-name {
+    grid-row: 1 !important;
+    max-width: 145px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+  }
+
+  .journey-section.world-map-section .map-pan > .world-map > .map-pin .pin-status {
+    grid-row: 2 !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    letter-spacing: .13em !important;
+  }
+}
+@media (min-width: 601px) {
+  .journey-section.world-map-section .map-pan {
+    width: 100%;
+    overflow: visible;
+  }
+}
