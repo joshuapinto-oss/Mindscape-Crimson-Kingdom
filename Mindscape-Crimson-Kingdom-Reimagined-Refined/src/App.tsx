@@ -182,6 +182,7 @@ export default function App(){
  <div className="section-heading"><div><div className="eyebrow dark">THE WORLD OF THE HUMAN MIND</div><h2>Choose a region.<br/><em>Uncover its story.</em></h2></div><p>This is not a textbook to scroll through. It is a world to explore. Each landmark opens a story, reveals the psychology behind it and leads you to the next discovery.</p></div>
  <div className="world-map-shell">
   <div className="map-compass">N<br/><span>✦</span></div>
+  <div className="map-pan">
   <div className="world-map">
    <svg className="map-terrain" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
     <defs>
@@ -207,6 +208,7 @@ export default function App(){
    <div className="map-landmark landmark-garden"><span>🌿</span><small>THE GARDENS</small></div>
    {chapters.map((c,i)=>{const positions=[['8%','80%'],['25%','65%'],['44%','76%'],['61%','60%'],['79%','70%'],['89%','49%'],['70%','37%'],['52%','46%'],['34%','34%'],['17%','24%'],['43%','16%'],['64%','15%'],['84%','23%']];const done=c.topics.filter((_,j)=>progress.done.includes(c.id+'-'+j)).length;return <button key={c.id} className={`map-pin pin-${i+1}`} style={{left:positions[i][0],top:positions[i][1],'--pin':c.accent} as React.CSSProperties} onClick={()=>{selectChapter(c.id);document.getElementById('lesson')?.scrollIntoView({behavior:'smooth'})}}><span className="pin-number">{String(i+1).padStart(2,'0')}</span><span className="pin-name">{c.title}</span><span className="pin-status">{done===c.topics.length?'✦ DISCOVERED':'EXPLORE'}</span></button>})}
    <div className="map-path-label">THE PATH OF CURIOSITY</div>
+  </div>
   </div>
   <div className="map-legend"><span><i className="legend-dot"/> Unexplored region</span><span><i className="legend-dot discovered"/> Knowledge collected</span><span>↗ Select any numbered landmark</span></div>
  </div>
