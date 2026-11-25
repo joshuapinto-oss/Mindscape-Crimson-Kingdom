@@ -1742,3 +1742,119 @@ body{background:#4b0718}
   color: #401322 !important;
   stroke: #401322 !important;
 }
+
+
+/* MOBILE MAP: preserve the desktop composition and allow horizontal panning.
+   The map uses the same chapter coordinates and visual card proportions as desktop. */
+@media (max-width: 600px) {
+  .journey-section.world-map-section {
+    overflow: visible !important;
+  }
+  .world-map-shell {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-x: contain !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #d7a866 #4d0915 !important;
+    padding: 7px !important;
+  }
+  .world-map {
+    display: block !important;
+    position: relative !important;
+    width: 1200px !important;
+    min-width: 1200px !important;
+    max-width: none !important;
+    height: 570px !important;
+    min-height: 570px !important;
+    aspect-ratio: auto !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .map-terrain {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .map-pin {
+    position: absolute !important;
+    display: grid !important;
+    grid-template-columns: 34px minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    justify-items: start !important;
+    gap: 3px 10px !important;
+    width: 205px !important;
+    min-width: 205px !important;
+    max-width: 205px !important;
+    min-height: 68px !important;
+    height: auto !important;
+    padding: 10px 12px !important;
+    border: 2px solid #ad9360 !important;
+    border-radius: 18px !important;
+    background: #f4e8ca !important;
+    color: #263e34 !important;
+    text-align: left !important;
+    transform: translate(-50%, -50%) !important;
+    box-shadow: 0 5px 12px #1b342e66 !important;
+    z-index: 6 !important;
+  }
+  .map-pin:before { display: none !important; }
+  .pin-number {
+    position: static !important;
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    border-radius: 50% !important;
+  }
+  .pin-name {
+    display: block !important;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    max-width: 145px !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    text-overflow: clip !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+    color: #3a2028 !important;
+    background: transparent !important;
+  }
+  .pin-status {
+    display: block !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+    color: #98613a !important;
+  }
+  .map-pin:hover, .map-pin:active, .map-pin:focus-visible {
+    transform: translate(-50%, -50%) !important;
+  }
+  .map-landmark { transform: none !important; }
+  .map-landmark span { font-size: 40px !important; }
+  .map-landmark small {
+    background: #24483eaa !important;
+    color: #f5e6bf !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 5px 7px !important;
+    font-size: 8px !important;
+    white-space: nowrap !important;
+  }
+  .map-compass { width: 42px !important; height: 42px !important; font-size: 10px !important; }
+  .map-path-label { font-size: 9px !important; padding: 6px 9px !important; }
+}
